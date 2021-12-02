@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_01", "Days\Day_01\Day_01.csproj", "{FC53CBF0-D0B4-4C53-97E3-AD526313A426}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day_02", "Days\Day_02\Day_02.csproj", "{490BBD31-20F6-4525-93CD-8E635B1045BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,12 +31,17 @@ Global
 		{FC53CBF0-D0B4-4C53-97E3-AD526313A426}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC53CBF0-D0B4-4C53-97E3-AD526313A426}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC53CBF0-D0B4-4C53-97E3-AD526313A426}.Release|Any CPU.Build.0 = Release|Any CPU
+		{490BBD31-20F6-4525-93CD-8E635B1045BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{490BBD31-20F6-4525-93CD-8E635B1045BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{490BBD31-20F6-4525-93CD-8E635B1045BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{490BBD31-20F6-4525-93CD-8E635B1045BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FC53CBF0-D0B4-4C53-97E3-AD526313A426} = {E657A175-8EEC-4324-9C6B-4FCEE5D33BBD}
+		{490BBD31-20F6-4525-93CD-8E635B1045BF} = {E657A175-8EEC-4324-9C6B-4FCEE5D33BBD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {95AD32BC-42B0-431C-A1F5-89EB702EAB3F}

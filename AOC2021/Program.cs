@@ -1,12 +1,14 @@
 ﻿using Days;
 using Shared;
-
+using System.Reflection;
 
 internal static  partial class Program
 {
+
     private static readonly List<Day> Days = new()
     {
         new Day_01(),
+        new Day_02(),
     };
     static void Main(string[] args)
     {
