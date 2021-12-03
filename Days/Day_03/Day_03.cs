@@ -21,7 +21,7 @@ namespace Days
             for (int i = 0; i < binaryReadout.First().Length; i++)
             {
                 var temp = binaryReadout.Select(x => x[i])
-                    .GroupBy(i => i)
+                    .GroupBy(y => y)
                     .OrderByDescending(g => g.Count())
                     .Select(x => x.Key).First();
                 gamma += temp;
