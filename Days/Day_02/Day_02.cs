@@ -10,7 +10,7 @@ namespace Days
             Title = "Dive!";
             DayNumber = 2;
         }
-        protected override void Gather_input()
+        public override void Gather_input()
         {
             CommandList = Read_file().Select(x =>
             {
@@ -21,18 +21,16 @@ namespace Days
             }).ToList();
         }
 
-        protected override void Part1()
+        protected override string HandlePart1()
         {
             var finalPosition = DetermineFinalPosition(CommandList, false);
-            Console.WriteLine($"HorizontalPosition: {finalPosition.HorizontalPosition}, Depth: {finalPosition.Depth}");
-            Console.WriteLine($"HorizontalPosition x depth: {finalPosition.HorizontalPosition * finalPosition.Depth}");
+            return $"HorizontalPosition x depth: {finalPosition.HorizontalPosition * finalPosition.Depth}";
         }
 
-        protected override void Part2()
+        protected override string HandlePart2()
         {
             var finalPosition = DetermineFinalPosition(CommandList, true);
-            Console.WriteLine($"HorizontalPosition: {finalPosition.HorizontalPosition}, Depth: {finalPosition.Depth}");
-            Console.WriteLine($"HorizontalPosition x depth: {finalPosition.HorizontalPosition * finalPosition.Depth}");
+            return $"HorizontalPosition x depth: {finalPosition.HorizontalPosition * finalPosition.Depth}";
         }
 
         public Position DetermineFinalPosition(List<Command> commands, bool useAim)

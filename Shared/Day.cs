@@ -21,11 +21,11 @@ namespace Shared
             {
                 case "1":
                     Gather_input();
-                    Part1();
+                    Console.WriteLine(HandlePart1());
                     break;
                 case "2":
                     Gather_input();
-                    Part2();
+                    Console.WriteLine(HandlePart2());
                     break;
                 case "1p":
                     Performance_logging(Gather_input, Part1);
@@ -51,7 +51,7 @@ namespace Shared
         }
 
 
-        protected virtual IEnumerable<string> Read_file()
+        public virtual IEnumerable<string> Read_file()
         {
             var resources = Assembly.GetCallingAssembly().GetManifestResourceNames().ToList();
             using var stream = Assembly.GetCallingAssembly().GetManifestResourceStream(resources.Single(x => x.EndsWith("input.txt")));
@@ -59,11 +59,13 @@ namespace Shared
             return reader.ReadAllLines().ToArray();
         }
 
-        protected abstract void Gather_input();
+        public abstract void Gather_input();
+        public void Part1() => Console.WriteLine(HandlePart1());
+        public void Part2() => Console.WriteLine(HandlePart2());
 
-        protected abstract void Part1();
+        protected abstract string HandlePart1();
 
-        protected abstract void Part2();
+        protected abstract string HandlePart2();
 
         private static void Performance_logging(params Action[] actions)
         {
