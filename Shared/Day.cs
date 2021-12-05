@@ -5,7 +5,7 @@ namespace Shared
 {
     public abstract class Day
     {
-        public string Title;
+        public string Title = string.Empty;
         public int DayNumber;
         public string Info => $"{DayNumber}. {Title}";
 

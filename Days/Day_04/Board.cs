@@ -5,11 +5,7 @@
         public List<Field> Fields { get; set; }
         public List<List<Field>> Rows => Fields.GroupBy(x => x.Y).Select(x => x.ToList()).ToList();
         public List<List<Field>> Columns => Fields.GroupBy(x => x.X).Select(x => x.ToList()).ToList();
-
-        public bool hasBingo()
-        {
-            return Rows.Any(x => x.All(y => y.Checked)) || Columns.Any(x => x.All(y => y.Checked));
-        }
+        public bool hasBingo => Rows.Any(x => x.All(y => y.Checked)) || Columns.Any(x => x.All(y => y.Checked));
 
         public void PlayNumber(int value)
         {

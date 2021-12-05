@@ -41,10 +41,10 @@ namespace Days
                     board.PlayNumber(number);
                 }
 
-                if (Boards.Any(x => x.hasBingo()))
+                if (Boards.Any(x => x.hasBingo))
                     break;
             }
-            var winningBoard = Boards.Single(x => x.hasBingo());
+            var winningBoard = Boards.Single(x => x.hasBingo);
             var sumUnchecked = winningBoard.Fields.Where(x => !x.Checked).Sum(x => x.Value);
             return (finalNumber * sumUnchecked).ToString();
         }
@@ -62,7 +62,7 @@ namespace Days
                     board.PlayNumber(number);
                 }
 
-                var boardsWithBingo = boardsInPlay.ToList().Where(x => x.hasBingo());
+                var boardsWithBingo = boardsInPlay.ToList().Where(x => x.hasBingo);
                 finishedBoards.AddRange(boardsWithBingo);
                 boardsInPlay = boardsInPlay.Except(finishedBoards).ToList();
                 if (!boardsInPlay.Any()) break;
