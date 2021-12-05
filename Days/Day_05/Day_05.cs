@@ -49,15 +49,12 @@ namespace Days
                 var rangeY = Enumerable.Range(minY, maxY - minY + 1);
                 var correctOrderX = line.fromX < line.toX ? rangeX.ToList() : rangeX.Reverse().ToList();
                 var correctOrderY = line.fromY < line.toY ? rangeY.ToList() : rangeY.Reverse().ToList();
-                if (correctOrderX.Count() == correctOrderY.Count())
-                {
-                    visitedPoints.AddRange(correctOrderX.Select((x, index) => new VisitedPoint(x, correctOrderY[index])));
-                }
-                else
-                {
-                    if (correctOrderY.Count() == 1) visitedPoints.AddRange(correctOrderX.Select(x => new VisitedPoint(x, correctOrderY.Single())));
-                    else visitedPoints.AddRange(correctOrderY.Select(y => new VisitedPoint(correctOrderX.Single(), y)));
-                }
+                var pointsToAdd = correctOrderX.Count() == correctOrderY.Count() ?
+                                        correctOrderX.Select((x, index) => new VisitedPoint(x, correctOrderY[index])) :
+                                        correctOrderY.Count() == 1 ? 
+                                            correctOrderX.Select(x => new VisitedPoint(x, correctOrderY.Single())) :
+                                            correctOrderY.Select(y => new VisitedPoint(correctOrderX.Single(), y));
+                visitedPoints.AddRange(pointsToAdd);
             }
             return visitedPoints;
         }
