@@ -9,10 +9,7 @@ internal static  partial class Program
         new Day_01(),
         new Day_02(),
         new Day_03(),
-        new Day_04(),
-        new Day_05(),
-        new Day_06(),
-        new Day_07()
+        new Day_04()
     };
     static void Main(string[] args)
     {
