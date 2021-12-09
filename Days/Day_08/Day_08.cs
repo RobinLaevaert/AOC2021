@@ -17,11 +17,10 @@ namespace Days
 
         protected override string HandlePart1()
         {
-            var response = SignalNotes.Select(x => x.Output.Select(y => y.Count() == (int)SegmentCount.One ||
-                                                                    y.Count() == (int)SegmentCount.Four ||
-                                                                    y.Count() == (int)SegmentCount.Seven ||
-                                                                    y.Count() == (int)SegmentCount.Eight)
-                                                        .Count(x => x == true))
+            var response = SignalNotes.Select(x => x.Output.Count(y => y.Length == (int)SegmentCount.One ||
+                                                                    y.Length == (int)SegmentCount.Four ||
+                                                                    y.Length == (int)SegmentCount.Seven ||
+                                                                    y.Length == (int)SegmentCount.Eight))
                                                         .Sum();
             return response.ToString();
         }

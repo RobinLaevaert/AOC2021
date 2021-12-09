@@ -26,5 +26,12 @@ namespace Shared
                 }
             }
         }
+
+        public static string OrderAlphabetically (this string str)
+        {
+            char[] characters = str.ToArray();
+            Array.Sort(characters);
+            return new string(characters);
+        }
     }
 }
