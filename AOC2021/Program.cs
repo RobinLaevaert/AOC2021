@@ -14,7 +14,8 @@ internal static  partial class Program
         new Day_06(),
         new Day_07(),
         new Day_08(),
-        new Day_09()
+        new Day_09(),
+        new Day_10(),
     };
     static void Main(string[] args)
     {
