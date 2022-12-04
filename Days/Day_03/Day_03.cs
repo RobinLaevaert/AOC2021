@@ -1,9 +1,12 @@
-﻿using Shared;
+﻿using System.Threading.Channels;
+using Shared;
 namespace Days
 {
     public class Day_03 : Day
     {
-        List<string> binaryReadout;
+        List<Round> rounds;
+        private List<Tuple<Move, string, string, int, Result>> map;
+        
         public Day_03()
         {
             Title = "Binary Diagnostic";
@@ -11,58 +14,79 @@ namespace Days
         }
         public override void Gather_input()
         {
-            binaryReadout = Read_file().ToList() ;
+            map = new List<Tuple<Move, string, string, int, Result>>()
+            {
+                new(Move.Paper, "B", "Y", 2, Result.Draw),
+                new(Move.Rock, "A", "X", 1, Result.Loss),
+                new(Move.Scissors, "C", "Z", 3, Result.Win),
+            };
+            rounds = Read_file().Select(x => new Round(map.Single(y => y.Item2 == x.Split(" ")[0]).Item1,
+                map.Single(y => y.Item3 == x.Split(" ")[1]).Item1, map.Single(y => y.Item3 == x.Split(" ")[1]).Item5)).ToList();
         }
 
         protected override string HandlePart1()
         {
-            var gamma = string.Empty;
-            for (int i = 0; i < binaryReadout.First().Length; i++)
+            foreach (var round in rounds)
             {
-                var temp = binaryReadout.Select(x => x[i])
-                    .GroupBy(y => y)
-                    .OrderByDescending(g => g.Count())
-                    .Select(x => x.Key).First();
-                gamma += temp;
+                round.Points = map.Single(y => y.Item1 == round.Round1Move).Item4 + (((int) round.Round1Result) * 3);
             }
-            var gammaNumber = Convert.ToInt32(gamma, 2);
-            var epsilon = Convert.ToString(~gammaNumber, 2);
-            epsilon = epsilon.Remove(0, epsilon.Length - gamma.Length);
-            var epsilonNumber = Convert.ToInt32(epsilon, 2);
-            var consumptionRate = gammaNumber * epsilonNumber;
-            return consumptionRate.ToString();
+
+            return rounds.Sum(x => x.Points).ToString();
         }
 
         protected override string HandlePart2()
         {
-            var oxygenRating = GetOxygenRating(binaryReadout.ToList());
-            var co2Rating = Getco2Rating(binaryReadout.ToList());
-            var lifeSupportRating = Convert.ToInt32(oxygenRating, 2) * Convert.ToInt32(co2Rating, 2);
-            return lifeSupportRating.ToString();
-        }
-        public string GetOxygenRating(List<string> input)
-        {
-            return FilterInputList(input, 0, true);
+            foreach (var round in rounds)
+            {
+                round.Points = map.Single(y => y.Item1 == round.Round2Move).Item4 + (((int) round.Round2Result) * 3);
+            }
+            
+            return rounds.Sum(x => x.Points).ToString();
         }
 
-        public string Getco2Rating(List<string> input)
-        {
-            return FilterInputList(input, 0, false);
-        }
+    }
 
-        public string FilterInputList(List<string> input, int index, bool mostCommon)
+    public class Round
+    {
+        public Round(Move opponentMove, Move ownMove, Result expectedResult)
         {
-            var mostCommonBit = input.Select(x => x[index])
-                    .OrderByDescending(x => x)
-                    .GroupBy(i => i)
-                    .OrderByDescending(g => g.Count())
-                    .Select(x => x.Key)
-                    .First();
-            var filteredList = mostCommon ? 
-                                input.Where(x => x[index] == mostCommonBit).ToList() : 
-                                input.Where(x => x[index] != mostCommonBit).ToList();
-            if (filteredList.Count == 1) return filteredList.First();
-            return FilterInputList(filteredList, index += 1, mostCommon);
+            OpponentMove = opponentMove;
+            OwnMove = ownMove;
+            Round1Move = ownMove;
+            Round2Result = expectedResult;
         }
+        public Move OpponentMove { get; set; }
+        public Move OwnMove { get; set; }
+        
+        public Move Round1Move { get; set; }
+
+        public Move Round2Move => Round2Result == Result.Draw ? OpponentMove :
+            Round2Result == Result.Win ? 
+                (Move)(((int) OpponentMove + 2) % 3): 
+                (Move)(((int) OpponentMove + 1) % 3);
+        
+        public Result Round2Result { get; set; }
+
+        public int Points { get; set; }
+
+        public Result Round1Result => (int) OpponentMove == (int) OwnMove ? 
+            Result.Draw :
+            (int) OwnMove % 3 == (((int) OpponentMove + 1) % 3) ? 
+                Result.Loss : 
+                Result.Win;
+    }
+
+    public enum Move
+    {
+        Rock,
+        Scissors,
+        Paper,
+    }
+
+    public enum Result
+    {
+        Loss,
+        Draw,
+        Win
     }
 }

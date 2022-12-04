@@ -4,7 +4,7 @@ namespace Days
 {
     public class Day_01 : Day
     {
-        public List<int> input = new ();
+        public List<Elf> input = new ();
         public Day_01()
         {
             Title = "Sonar Sweep";
@@ -12,21 +12,44 @@ namespace Days
         }
         public override void Gather_input()
         {
-            input = Read_file().Select(int.Parse).ToList();
+            var elfCount = 1;
+            var currentElf = new Elf(elfCount);
+            foreach (var line in Read_file())
+            {
+                if (string.IsNullOrEmpty(line))
+                {
+                    input.Add(currentElf);
+                    elfCount++;
+                    currentElf = new(elfCount);
+                }
+                else
+                {
+                    currentElf.Calories.Add(int.Parse(line));
+                }
+            }
         }
 
         protected override string HandlePart1()
         {
-            var result = input.SelectWithPrevious((prev, cur) => cur > prev).ToList();
-            return result.Count(x => x == true).ToString();
+            var maxElf = input.OrderByDescending(x => x.Calories.Sum()).First();
+            return $"Elf #{maxElf.Number} has {maxElf.Calories.Sum()} Calories";
         }
 
         protected override string HandlePart2()
         {
-            var WindowedInput = new int[input.Count - 2];
-            WindowedInput = WindowedInput.Select((x, index) => input[index] + input[index + 1] + input[index + 2]).ToArray();
-            var result = WindowedInput.SelectWithPrevious((prev, cur) => cur > prev).ToList();
-            return result.Count(x => x == true).ToString();
+            var maxElves = input.OrderByDescending(x => x.Calories.Sum()).Take(3);
+            return $"The top 3 elves carry a combined {maxElves.Sum(x => x.Calories.Sum())} Calories";
         }
+    }
+
+    public class Elf
+    {
+        public Elf(int number)
+        {
+            Number = number;
+            Calories = new();
+        }
+        public int Number { get; set; }
+        public List<int> Calories { get; set; }
     }
 }
